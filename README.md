@@ -54,3 +54,8 @@ The primary focus of this project is the image embedded in the email signature, 
 4. Open `index.html` and search the old logo file name using `ctrl + F`. Replace the old file `src="img\OldLogo.png"` with `src="img\NewLogo.png"`
 ![code](<img_readme/change logo.png>)
 5. Commit and push.
+
+## Color Code
+![nthuracing_logo_2025_blue_0474cf_0f3b7d](img/nthuracing_logo_2025_blue_0474cf_0f3b7d.png)
+
+The gradient for the 2025 logo is #0474cf and #0f3b7d.
