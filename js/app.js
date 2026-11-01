@@ -1,7 +1,7 @@
 /**
  * NTHU Racing - Email Signature Generator Engine
  * Handles real-time preview, clipboard copy (rich text & plain text),
- * preset management, and localStorage caching.
+ * and localStorage caching.
  */
 
 // Global state
@@ -9,8 +9,8 @@ const defaultState = {
   chineseName: '陳冠宇',
   englishName: 'Kuan-Yu Chen',
   selectedGroup: 'Chassis Group',
-  selectedTitle: 'Technical Director',
-  groupTitle: 'Chassis Group | Technical Director',
+  selectedTitle: 'Leader',
+  groupTitle: 'Leader of Chassis Group',
   phone: '+(886) 912-345678',
   email: 'nthuracing@gmail.com',
   location: '新竹市光復路二段101號 科儀中心 S11',
@@ -20,80 +20,33 @@ const defaultState = {
 
 let state = { ...defaultState };
 
-// Quick Presets
+// 车队指定組別 (流力組 底盤組 電系組 車輛動態組 動力組 行政組)
 const groups = [
-  { en: 'Aerodynamic Group', zh: '空力組' },
-  { en: 'Chassis Group', zh: '車架組' },
-  { en: 'Driverless Group', zh: '無人車組' },
-  { en: 'Drivetrain Group', zh: '傳動組' },
-  { en: 'Electrical Group', zh: '電裝組' },
-  { en: 'Suspension Group', zh: '懸吊組' },
-  { en: 'Vehicle Dynamics Group', zh: '動態組' },
-  { en: 'Administration', zh: '行政公關組' }
+  { en: 'Aerodynamic Group', zh: '流力組' },
+  { en: 'Chassis Group', zh: '底盤組' },
+  { en: 'Electrical Group', zh: '電系組' },
+  { en: 'Vehicle Dynamics Group', zh: '車輛動態組' },
+  { en: 'Powertrain Group', zh: '動力組' },
+  { en: 'Administration', zh: '行政組' }
 ];
 
+// 職稱 (隊長 副隊長 組長 組員)
 const titles = [
   { en: 'Team Captain', zh: '隊長' },
   { en: 'Vice Captain', zh: '副隊長' },
-  { en: 'Technical Director', zh: '技術總監' },
   { en: 'Leader', zh: '組長' },
-  { en: 'Member', zh: '隊員' },
-  { en: 'Public Relations', zh: '公關' },
-  { en: 'Treasurer', zh: '財務' }
+  { en: 'Member', zh: '組員' }
 ];
-
-// Sample profiles for quick loading
-const sampleProfiles = {
-  captain: {
-    chineseName: '陳冠宇',
-    englishName: 'David Chen',
-    selectedGroup: 'Chassis Group',
-    selectedTitle: 'Team Captain',
-    groupTitle: 'Chassis Group | Team Captain',
-    phone: '+(886) 912-345678',
-    email: 'captain.nthuracing@gmail.com',
-    location: '新竹市光復路二段101號 科儀中心 S11',
-    nameColor: '#0474cf',
-    logoFileName: 'nthuracing_logo_2025_blue_0474cf_0f3b7d.png'
-  },
-  electrical_leader: {
-    chineseName: '林志豪',
-    englishName: 'Kevin Lin',
-    selectedGroup: 'Electrical Group',
-    selectedTitle: 'Leader',
-    groupTitle: 'Leader of Electrical Group',
-    phone: '+(886) 987-654321',
-    email: 'electrical.nthuracing@gmail.com',
-    location: '新竹市光復路二段101號 科儀中心 S11',
-    nameColor: '#0f3b7d',
-    logoFileName: 'nthuracing_logo_2025_blue_0474cf_0f3b7d.png'
-  },
-  member: {
-    chineseName: '王小明',
-    englishName: 'Xiao-Ming Wang',
-    selectedGroup: 'Aerodynamic Group',
-    selectedTitle: 'Member',
-    groupTitle: 'Aerodynamic Group | Member',
-    phone: '+(886) 900-112233',
-    email: 'nthu.racing@gmail.com',
-    location: '新竹市光復路二段101號 科儀中心 S11',
-    nameColor: '#0474cf',
-    logoFileName: 'nthuracing_logo_2025.png'
-  }
-};
 
 /**
  * Determine the public base URL for images in copied email signatures.
  * Images MUST have absolute URLs so mail clients can display them publicly.
  */
 function getPublicBaseUrl() {
-  // If hosted on GitHub Pages or custom domain over HTTP/HTTPS:
   if (window.location.protocol.startsWith('http')) {
-    // Strip trailing /index.html and trailing slashes
     const path = window.location.pathname.replace(/\/index\.html$/i, '').replace(/\/+$/, '');
     return window.location.origin + path;
   }
-  // Fallback for local file:// testing - points to the official production GitHub Pages
   return 'https://nthu-racing.github.io/Email-Signature-Template';
 }
 
@@ -120,11 +73,10 @@ function generateSignatureHtml(options = { absoluteUrls: false }) {
   const baseUrl = options.absoluteUrls ? getPublicBaseUrl() : '.';
   const engNameFormatted = formatEnglishName(state.englishName);
   
-  // Choose correct image path with forward slashes
   const phoneIconUrl = `${baseUrl}/img/phone_icon.png`;
   const emailIconUrl = `${baseUrl}/img/email_icon.png`;
   const locationIconUrl = `${baseUrl}/img/location_icon.png`;
-  const logoUrl = `${baseUrl}/img/${state.logoFileName}`;
+  const logoUrl = `${baseUrl}/img/nthuracing_logo_2025_blue_0474cf_0f3b7d.png`;
 
   return `<!-- NTHU Racing Email Signature Start -->
 <table bgcolor="transparent" border="0" cellpadding="0" cellspacing="0" width="100%"
@@ -189,7 +141,7 @@ function generateSignatureHtml(options = { absoluteUrls: false }) {
                                                                                     <p
                                                                                         style="Margin:0;text-align:center;mso-line-height-alt:30px;mso-ansi-font-size:24px;">
                                                                                         <span
-                                                                                            style="font-size:24px;font-family:'Bahnschrift','Arial',sans-serif;font-weight:700;color:${state.nameColor};line-height:125%;mso-line-height-alt:30px;mso-ansi-font-size:24px;">${escapeHtml(state.chineseName)}</span>
+                                                                                            style="font-size:24px;font-family:'Bahnschrift','Arial',sans-serif;font-weight:700;color:#0474cf;line-height:125%;mso-line-height-alt:30px;mso-ansi-font-size:24px;">${escapeHtml(state.chineseName)}</span>
                                                                                     </p>
                                                                                 </div>
                                                                             </td>
@@ -516,14 +468,13 @@ function escapeHtml(str) {
 function updatePreview() {
   const container = document.getElementById('signature-render-container');
   if (container) {
-    // For live preview in DOM, use relative URLs so images display immediately
     container.innerHTML = generateSignatureHtml({ absoluteUrls: false });
   }
   saveStateToLocalStorage();
 }
 
 /**
- * Copy rich formatted signature directly to clipboard for Gmail/Outlook/etc.
+ * Copy formatted signature directly to clipboard for Gmail/Outlook/etc.
  */
 async function copyRichSignature() {
   const copyBtn = document.getElementById('btn-copy-signature');
@@ -531,7 +482,7 @@ async function copyRichSignature() {
   const plainText = generatePlainText();
   let success = false;
 
-  // Method 1: Modern Async Clipboard API with ClipboardItem (Supported in Chrome 76+, Edge 79+, Safari 13.1+, Firefox 127+)
+  // Method 1: Modern Clipboard API
   if (navigator.clipboard && window.ClipboardItem) {
     try {
       const htmlBlob = new Blob([signatureHtml], { type: 'text/html' });
@@ -575,7 +526,7 @@ async function copyRichSignature() {
   }
 
   if (success) {
-    showToast('🎉 簽名檔已複製到剪貼簿！請至 Gmail 簽名設定直接貼上 (Ctrl+V / Cmd+V)');
+    showToast('簽名檔已複製到剪貼簿，請至 Gmail 貼上');
     if (copyBtn) {
       const originalHtml = copyBtn.innerHTML;
       copyBtn.classList.add('copied');
@@ -583,7 +534,7 @@ async function copyRichSignature() {
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="20 6 9 17 4 12"></polyline>
         </svg>
-        <span>已成功複製至剪貼簿！</span>
+        <span>已複製至剪貼簿</span>
       `;
       setTimeout(() => {
         copyBtn.classList.remove('copied');
@@ -591,14 +542,13 @@ async function copyRichSignature() {
       }, 3000);
     }
   } else {
-    showToast('⚠️ 瀏覽器阻擋直接複製，請點選「檢視 HTML 原始碼」手動選取');
+    showToast('瀏覽器限制直接寫入，請使用「檢視 / 複製 HTML 原始碼」');
   }
 }
 
 /**
  * Toast Notification System
  */
-let toastTimeout;
 function showToast(message) {
   const toastContainer = document.getElementById('toast-container');
   if (!toastContainer) return;
@@ -625,7 +575,7 @@ function showToast(message) {
         toast.parentNode.removeChild(toast);
       }
     }, 300);
-  }, 4000);
+  }, 3500);
 }
 
 /**
@@ -645,6 +595,9 @@ function loadStateFromLocalStorage() {
     if (saved) {
       const parsed = JSON.parse(saved);
       state = { ...defaultState, ...parsed };
+      // Ensure logo and color remain locked
+      state.logoFileName = 'nthuracing_logo_2025_blue_0474cf_0f3b7d.png';
+      state.nameColor = '#0474cf';
     }
   } catch (e) {
     console.warn('Failed to load state from localStorage:', e);
@@ -661,11 +614,8 @@ function syncFormWithState() {
     if (el) el.value = state[f] || '';
   });
 
-  // Select matching chips if applicable
   updateGroupChips();
   updateTitleChips();
-  updateLogoSelection();
-  updateColorSwatches();
 }
 
 /**
@@ -715,10 +665,14 @@ function composeGroupTitle() {
   const grp = state.selectedGroup || '';
   const ttl = state.selectedTitle || '';
   
-  if (ttl === 'Team Captain' || ttl === 'Vice Captain' || ttl === 'Technical Director') {
-    state.groupTitle = `${grp ? grp + ' | ' : ''}${ttl}`;
+  if (ttl === 'Team Captain') {
+    state.groupTitle = 'Team Captain';
+  } else if (ttl === 'Vice Captain') {
+    state.groupTitle = 'Vice Captain';
   } else if (ttl === 'Leader') {
     state.groupTitle = `Leader of ${grp}`;
+  } else if (ttl === 'Member') {
+    state.groupTitle = `${grp} | Member`;
   } else {
     state.groupTitle = `${grp} | ${ttl}`;
   }
@@ -741,20 +695,6 @@ function updateTitleChips() {
   });
 }
 
-function updateLogoSelection() {
-  const cards = document.querySelectorAll('.logo-option-card');
-  cards.forEach(card => {
-    card.classList.toggle('selected', card.dataset.logo === state.logoFileName);
-  });
-}
-
-function updateColorSwatches() {
-  const swatches = document.querySelectorAll('.color-swatch');
-  swatches.forEach(s => {
-    s.classList.toggle('active', s.dataset.color.toLowerCase() === state.nameColor.toLowerCase());
-  });
-}
-
 /**
  * Bind DOM Event Listeners
  */
@@ -771,32 +711,6 @@ function bindEventListeners() {
     }
   });
 
-  // Logo Cards
-  document.querySelectorAll('.logo-option-card').forEach(card => {
-    card.addEventListener('click', () => {
-      state.logoFileName = card.dataset.logo;
-      updateLogoSelection();
-      updatePreview();
-    });
-  });
-
-  // Color Swatches
-  document.querySelectorAll('.color-swatch').forEach(swatch => {
-    swatch.addEventListener('click', () => {
-      state.nameColor = swatch.dataset.color;
-      updateColorSwatches();
-      updatePreview();
-    });
-  });
-
-  // Custom Color Picker
-  const customColorInput = document.getElementById('custom-color-input');
-  if (customColorInput) {
-    customColorInput.addEventListener('input', (e) => {
-      state.nameColor = e.target.value;
-      updateColorSwatches();
-      updatePreview();
-    });
   // Phone Format Helper
   const btnFormatPhone = document.getElementById('btn-format-phone');
   if (btnFormatPhone) {
@@ -850,11 +764,11 @@ function bindEventListeners() {
     btnCopyRawHtml.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(textareaHtml.value);
-        showToast('✅ HTML 原始碼已複製！');
+        showToast('HTML 原始碼已複製');
       } catch (err) {
         textareaHtml.select();
         document.execCommand('copy');
-        showToast('✅ HTML 原始碼已複製！');
+        showToast('HTML 原始碼已複製');
       }
     });
   }
@@ -877,32 +791,6 @@ function bindEventListeners() {
         updatePreview();
         showToast('已重設為預設範本');
       }
-    });
-  }
-
-  // Profile presets
-  document.querySelectorAll('[data-load-profile]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const profileKey = e.currentTarget.dataset.loadProfile;
-      if (sampleProfiles[profileKey]) {
-        state = { ...sampleProfiles[profileKey] };
-        syncFormWithState();
-        updatePreview();
-        showToast(`已載入「${e.currentTarget.textContent.trim()}」範例`);
-      }
-    });
-  });
-
-  // Canvas Dark Mode Test Toggle
-  const toggleDark = document.getElementById('toggle-canvas-dark');
-  const canvas = document.getElementById('email-body-canvas');
-  if (toggleDark && canvas) {
-    toggleDark.addEventListener('click', () => {
-      canvas.classList.toggle('dark-mode-test');
-      const isDark = canvas.classList.contains('dark-mode-test');
-      toggleDark.innerHTML = isDark 
-        ? `☀️ 切換白底` 
-        : `🌙 測試黑底效果`;
     });
   }
 }
