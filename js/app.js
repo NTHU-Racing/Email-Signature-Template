@@ -6,8 +6,8 @@
 
 // Global state
 const defaultState = {
-  chineseName: '陳柏余',
-  englishName: 'Bo-Yu Chen',
+  chineseName: '陳冠宇',
+  englishName: 'Bill Chen',
   selectedGroup: 'Aerodynamic Group',
   selectedTitle: 'Member',
   groupTitle: 'Aerodynamic Group | Member',
