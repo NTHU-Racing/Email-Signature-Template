@@ -7,7 +7,7 @@
 // Global state
 const defaultState = {
   chineseName: '陳冠宇',
-  englishName: 'Bill Chen',
+  englishName: 'Alex Chen',
   selectedGroup: 'Aerodynamic Group',
   selectedTitle: 'Member',
   groupTitle: 'Aerodynamic Group | Member',
@@ -24,9 +24,10 @@ let state = { ...defaultState };
 const groups = [
   { en: 'Aerodynamic Group', zh: '流力組' },
   { en: 'Chassis Group', zh: '車架組' },
-  { en: 'Chassis Group', zh: '底盤組' },
+  { en: 'Suspension Group', zh: '底盤組' },
   { en: 'Electrical Group', zh: '電系組' },
   { en: 'Vehicle Dynamics Group', zh: '車輛動態組' },
+  { en: 'Driverless Group', zh: '無人車組' },
   { en: 'Powertrain Group', zh: '動力組' },
   { en: 'Administration', zh: '行政組' }
 ];
@@ -52,7 +53,7 @@ function getPublicBaseUrl() {
 }
 
 /**
- * Clean up English name formatting to ensure parentheses: e.g. "Bill Chen" -> "(Bill Chen)"
+ * Clean up English name formatting to ensure parentheses: e.g. "Alex Chen" -> "(Alex Chen)"
  */
 function formatEnglishName(rawName) {
   if (!rawName) return '';

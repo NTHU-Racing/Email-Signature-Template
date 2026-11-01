@@ -14,7 +14,7 @@ https://nthu-racing.github.io/Email-Signature-Template/
 ### 步驟二：輸入個人資訊
 於頁面左側依序填寫個人資訊：
 - 中文姓名（例如：陳冠宇）
-- 英文姓名（可使用自己的英文名字如 Bill Chen，或漢語拼音如 Kuan-Yu Chen，系統將自動加上括號）
+- 英文姓名（可使用自己的英文名字如 Alex Chen，或漢語拼音如 Kuan-Yu Chen，系統將自動加上括號）
 - 組別：點選所屬組別（流力組、車架組、底盤組、電系組、車輛動態組、動力組、行政組）
 - 職稱：點選職稱（隊長、副隊長、組長、組員），亦可直接於下方文字框手動調整
 - 聯絡電話：格式固定為 `+(886) 9XX-XXX-XXX`（輸入號碼將自動格式化帶入）
@@ -58,7 +58,8 @@ https://nthu-racing.github.io/Email-Signature-Template/
 | 中文組別 | 英文名稱 |
 | :--- | :--- |
 | 流力組 | Aerodynamic Group |
-| 車架組 / 底盤組 | Chassis Group |
+| 車架組 | Chassis Group |
+| 底盤組 | Suspension Group |
 | 電系組 | Electrical Group |
 | 車輛動態組 | Vehicle Dynamics Group |
 | 動力組 | Powertrain Group |
