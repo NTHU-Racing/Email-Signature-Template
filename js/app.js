@@ -11,7 +11,7 @@ const defaultState = {
   selectedGroup: 'Aerodynamic Group',
   selectedTitle: 'Member',
   groupTitle: 'Aerodynamic Group | Member',
-  phone: '+(886) 900-635-863',
+  phone: '+(886) 912-345-678',
   email: 'contact@nthuracing.tw',
   location: '新竹市光復路二段101號 科儀中心 S11',
   nameColor: '#0474cf',
