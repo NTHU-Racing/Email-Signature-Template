@@ -6,13 +6,13 @@
 
 // Global state
 const defaultState = {
-  chineseName: '陳冠宇',
-  englishName: 'Kuan-Yu Chen',
-  selectedGroup: 'Chassis Group',
-  selectedTitle: 'Leader',
-  groupTitle: 'Leader of Chassis Group',
-  phone: '+(886) 912-345678',
-  email: 'nthuracing@gmail.com',
+  chineseName: '陳柏余',
+  englishName: 'Bo-Yu Chen',
+  selectedGroup: 'Aerodynamic Group',
+  selectedTitle: 'Member',
+  groupTitle: 'Aerodynamic Group | Member',
+  phone: '+(886) 900-635-863',
+  email: 'contact@nthuracing.tw',
   location: '新竹市光復路二段101號 科儀中心 S11',
   nameColor: '#0474cf',
   logoFileName: 'nthuracing_logo_2025_blue_0474cf_0f3b7d.png'
@@ -20,9 +20,10 @@ const defaultState = {
 
 let state = { ...defaultState };
 
-// 车队指定組別 (流力組 底盤組 電系組 車輛動態組 動力組 行政組)
+// 車隊指定組別（含車架組與底盤組）
 const groups = [
   { en: 'Aerodynamic Group', zh: '流力組' },
+  { en: 'Chassis Group', zh: '車架組' },
   { en: 'Chassis Group', zh: '底盤組' },
   { en: 'Electrical Group', zh: '電系組' },
   { en: 'Vehicle Dynamics Group', zh: '車輛動態組' },
@@ -51,7 +52,7 @@ function getPublicBaseUrl() {
 }
 
 /**
- * Clean up English name formatting to ensure parentheses: e.g. "Kuan-Yu Chen" -> "(Kuan-Yu Chen)"
+ * Clean up English name formatting to ensure parentheses: e.g. "Bill Chen" -> "(Bill Chen)"
  */
 function formatEnglishName(rawName) {
   if (!rawName) return '';
@@ -63,8 +64,26 @@ function formatEnglishName(rawName) {
 }
 
 /**
+ * 自動格式化台灣手機號碼為 +(886) 9XX-XXX-XXX（固定兩個槓）
+ */
+function formatTaiwanPhone(phone) {
+  if (!phone) return '';
+  let digits = phone.replace(/\D/g, '');
+  if (digits.startsWith('886')) {
+    digits = '0' + digits.slice(3);
+  }
+  if (digits.startsWith('9') && digits.length === 9) {
+    digits = '0' + digits;
+  }
+  if (digits.startsWith('09') && digits.length >= 10) {
+    return `+(886) ${digits.slice(1, 4)}-${digits.slice(4, 7)}-${digits.slice(7, 10)}`;
+  }
+  return phone;
+}
+
+/**
  * Generate standard, battle-tested Email Signature HTML
- * Compatible with Outlook, Gmail, Apple Mail, and Thunderbird.
+ * Optimized column widths (max-width: 640px) with white-space: nowrap to prevent awkward address wrapping.
  *
  * @param {Object} options
  * @param {boolean} options.absoluteUrls - Whether to use absolute URLs for images
@@ -86,10 +105,10 @@ function generateSignatureHtml(options = { absoluteUrls: false }) {
             <div class="emailify" style="mso-line-height-rule:exactly;mso-hyphenate:none;word-spacing:normal;">
                 <div class="bg" lang="en" dir="auto">
                     <!--[if mso | IE]>
-<table align="left" border="0" cellpadding="0" cellspacing="0" class="r-outlook -outlook pr-16-outlook pl-16-outlook br-8-outlook -outlook" role="presentation" style="width:586px;" width="586"><tr><td style="line-height:0;font-size:0;mso-line-height-rule:exactly;">
+<table align="left" border="0" cellpadding="0" cellspacing="0" class="r-outlook -outlook pr-16-outlook pl-16-outlook br-8-outlook -outlook" role="presentation" style="width:640px;" width="640"><tr><td style="line-height:0;font-size:0;mso-line-height-rule:exactly;">
 <![endif]-->
                     <div class="r pr-16 pl-16 br-8"
-                        style="background:#fffffe;background-color:#fffffe;margin:0px;border-radius:8px 8px 8px 8px;max-width:586px;">
+                        style="background:#fffffe;background-color:#fffffe;margin:0px;border-radius:8px 8px 8px 8px;max-width:640px;">
                         <table align="left" border="0" cellpadding="0" cellspacing="0" role="presentation"
                             style="background:#fffffe;background-color:#fffffe;width:100%;border-radius:8px 8px 8px 8px;">
                             <tbody>
@@ -97,51 +116,40 @@ function generateSignatureHtml(options = { absoluteUrls: false }) {
                                     <td
                                         style="border:none;direction:ltr;font-size:0;padding:16px 0px 16px 0px;text-align:center;">
                                         <!--[if mso | IE]>
-<table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="width:586px;">
+<table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="width:640px;">
 <![endif]-->
                                         <div class="pc100 ogf"
                                             style="font-size:0;line-height:0;text-align:left;display:inline-block;width:100%;direction:ltr;">
                                             <!--[if mso | IE]>
-<table border="0" cellpadding="0" cellspacing="0" role="presentation"><tr><td style="vertical-align:top;width:20px;">
+<table border="0" cellpadding="0" cellspacing="0" role="presentation"><tr><td style="vertical-align:top;width:16px;">
 <![endif]-->
-                                            <div class="pc3-413 ogf"
-                                                style="font-size:0;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:3.4130%;">
-                                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                                    width="100%">
+                                            <div class="pc2-5 ogf"
+                                                style="font-size:0;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:2.5%;">
+                                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                                                     <tbody>
                                                         <tr>
-                                                            <td style="vertical-align:top;padding:0;">
-                                                                <table border="0" cellpadding="0" cellspacing="0"
-                                                                    role="presentation" width="100%">
-                                                                    <tbody></tbody>
-                                                                </table>
-                                                            </td>
+                                                            <td style="vertical-align:top;padding:0;"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
                                             <!--[if mso | IE]>
-</td><td style="vertical-align:top;width:148px;">
+</td><td style="vertical-align:top;width:170px;">
 <![endif]-->
-                                            <div class="pc25-256 ogf m c pl-50"
-                                                style="font-size:0;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:25.2560%;">
-                                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                                    width="100%">
+                                            <div class="pc26-5 ogf m c"
+                                                style="font-size:0;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:26.5%;">
+                                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                                                     <tbody>
                                                         <tr>
-                                                            <td
-                                                                style="border:none;vertical-align:top;padding:2px 0px 2px 0px;">
-                                                                <table border="0" cellpadding="0" cellspacing="0"
-                                                                    role="presentation" width="100%">
+                                                            <td style="border:none;vertical-align:top;padding:2px 0px 2px 0px;">
+                                                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                                                                     <tbody>
                                                                         <tr>
                                                                             <td align="center" class="x al-c m"
                                                                                 style="font-size:0;padding-bottom:2px;word-break:break-word;">
                                                                                 <div style="text-align:center;">
-                                                                                    <p
-                                                                                        style="Margin:0;text-align:center;mso-line-height-alt:30px;mso-ansi-font-size:24px;">
-                                                                                        <span
-                                                                                            style="font-size:24px;font-family:'Bahnschrift','Arial',sans-serif;font-weight:700;color:#0474cf;line-height:125%;mso-line-height-alt:30px;mso-ansi-font-size:24px;">${escapeHtml(state.chineseName)}</span>
+                                                                                    <p style="Margin:0;text-align:center;white-space:nowrap;mso-line-height-alt:30px;mso-ansi-font-size:24px;">
+                                                                                        <span style="font-size:24px;font-family:'Bahnschrift','Arial',sans-serif;font-weight:700;color:#0474cf;line-height:125%;white-space:nowrap;mso-line-height-alt:30px;mso-ansi-font-size:24px;">${escapeHtml(state.chineseName)}</span>
                                                                                     </p>
                                                                                 </div>
                                                                             </td>
@@ -150,30 +158,22 @@ function generateSignatureHtml(options = { absoluteUrls: false }) {
                                                                             <td align="center" class="x m"
                                                                                 style="font-size:0;padding-bottom:2px;word-break:break-word;">
                                                                                 <div style="text-align:center;">
-                                                                                    <p
-                                                                                        style="Margin:0;text-align:center;mso-line-height-alt:12px;mso-ansi-font-size:12px;">
-                                                                                        <span
-                                                                                            style="font-size:12px;font-family:'Bahnschrift','Arial',sans-serif;font-weight:400;color:#777777;line-height:100%;mso-line-height-alt:12px;mso-ansi-font-size:12px;">${escapeHtml(engNameFormatted)}</span></p>
+                                                                                    <p style="Margin:0;text-align:center;white-space:nowrap;mso-line-height-alt:12px;mso-ansi-font-size:12px;">
+                                                                                        <span style="font-size:12px;font-family:'Bahnschrift','Arial',sans-serif;font-weight:400;color:#777777;line-height:100%;white-space:nowrap;mso-line-height-alt:12px;mso-ansi-font-size:12px;">${escapeHtml(engNameFormatted)}</span>
+                                                                                    </p>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="s m"
-                                                                                style="font-size:0;padding:0;padding-bottom:2px;word-break:break-word;"
-                                                                                aria-hidden="true">
-                                                                                <div
-                                                                                    style="height:9px;line-height:9px;">
-                                                                                    &#8202;</div>
+                                                                            <td class="s m" style="font-size:0;padding:0;padding-bottom:2px;word-break:break-word;" aria-hidden="true">
+                                                                                <div style="height:9px;line-height:9px;">&#8202;</div>
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td align="center" class="x"
-                                                                                style="font-size:0;padding-bottom:0;word-break:break-word;">
+                                                                            <td align="center" class="x" style="font-size:0;padding-bottom:0;word-break:break-word;">
                                                                                 <div style="text-align:center;">
-                                                                                    <p
-                                                                                        style="Margin:0;text-align:center;mso-line-height-alt:14px;mso-ansi-font-size:12px;">
-                                                                                        <span
-                                                                                            style="font-size:12px;font-family:'Bahnschrift','Arial',sans-serif;font-weight:300;color:#777777;line-height:117%;mso-line-height-alt:14px;mso-ansi-font-size:12px;">${escapeHtml(state.groupTitle)}</span>
+                                                                                    <p style="Margin:0;text-align:center;mso-line-height-alt:14px;mso-ansi-font-size:12px;">
+                                                                                        <span style="font-size:12px;font-family:'Bahnschrift','Arial',sans-serif;font-weight:300;color:#777777;line-height:117%;mso-line-height-alt:14px;mso-ansi-font-size:12px;">${escapeHtml(state.groupTitle)}</span>
                                                                                     </p>
                                                                                 </div>
                                                                             </td>
@@ -188,89 +188,56 @@ function generateSignatureHtml(options = { absoluteUrls: false }) {
                                             <!--[if mso | IE]>
 </td><td style="vertical-align:top;width:12px;">
 <![endif]-->
-                                            <div class="pc2-2184 ogf g"
-                                                style="font-size:0;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:2.2184%;">
-                                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                                    width="100%">
+                                            <div class="pc1-8 ogf g"
+                                                style="font-size:0;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:1.8%;">
+                                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                                                     <tbody>
                                                         <tr>
-                                                            <td style="vertical-align:top;padding:0;">
-                                                                <table border="0" cellpadding="0" cellspacing="0"
-                                                                    role="presentation" width="100%">
-                                                                    <tbody></tbody>
-                                                                </table>
-                                                            </td>
+                                                            <td style="vertical-align:top;padding:0;"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
                                             <!--[if mso | IE]>
-</td><td style="vertical-align:top;width:239px;">
+</td><td style="vertical-align:top;width:290px;">
 <![endif]-->
-                                            <div class="pc40-785 ogf m c"
-                                                style="font-size:0;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:40.7850%;">
-                                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                                    style="border:none;vertical-align:top;" width="100%">
+                                            <div class="pc46 ogf m c"
+                                                style="font-size:0;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:46.5%;">
+                                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border:none;vertical-align:top;" width="100%">
                                                     <tbody>
                                                         <tr>
-                                                            <td align="left" class="a"
-                                                                style="background:transparent;font-size:0;padding:0;word-break:break-word;">
-                                                                <table cellpadding="0" cellspacing="0" width="100%"
-                                                                    border="0"
-                                                                    style="color:#000000;font-family:Arial,sans-serif;font-size:13px;line-height:22px;table-layout:fixed;width:100%;border:none;">
+                                                            <td align="left" class="a" style="background:transparent;font-size:0;padding:0;word-break:normal;">
+                                                                <table cellpadding="0" cellspacing="0" width="100%" border="0"
+                                                                    style="color:#000000;font-family:Arial,sans-serif;font-size:13px;line-height:22px;width:100%;border:none;">
                                                                     <tr class="q">
-                                                                        <td align="left" class="u"
-                                                                            style="padding:0;height:48px;word-wrap:break-word;vertical-align:middle;"
-                                                                            width="8.368200836820083%">
-                                                                            <table border="0" cellpadding="0"
-                                                                                cellspacing="0" width="100%">
+                                                                        <td align="left" class="u" style="padding:0;height:48px;vertical-align:middle;width:24px;">
+                                                                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                                                                 <tr>
-                                                                                    <td class="i tm fwm" align="left"
-                                                                                        width="100%"
-                                                                                        style="padding-bottom:8px;">
-                                                                                        <img alt="Phone" width="20"
-                                                                                            height="20"
-                                                                                            style="display:block;width:20px;height:20px;border:0;"
-                                                                                            src="${phoneIconUrl}">
+                                                                                    <td class="i tm fwm" align="left" width="100%" style="padding-bottom:8px;">
+                                                                                        <img alt="Phone" width="20" height="20" style="display:block;width:20px;height:20px;border:0;" src="${phoneIconUrl}">
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td class="i fwm" align="left"
-                                                                                        width="100%">
-                                                                                        <img alt="Email" width="20"
-                                                                                            height="20"
-                                                                                            style="display:block;width:20px;height:20px;border:0;"
-                                                                                            src="${emailIconUrl}">
+                                                                                    <td class="i fwm" align="left" width="100%">
+                                                                                        <img alt="Email" width="20" height="20" style="display:block;width:20px;height:20px;border:0;" src="${emailIconUrl}">
                                                                                     </td>
                                                                                 </tr>
                                                                             </table>
                                                                         </td>
-                                                                        <td class="tgtr"
-                                                                            style="vertical-align:middle;color:transparent;font-size:0;"
-                                                                            width="3.3472803347280333%">&#8203;
-                                                                        </td>
-                                                                        <td align="left" class="u"
-                                                                            style="padding:0;height:46px;word-wrap:break-word;vertical-align:middle;"
-                                                                            width="88.28451882845188%">
-                                                                            <table border="0" cellpadding="0"
-                                                                                cellspacing="0" width="100%">
+                                                                        <td style="vertical-align:middle;color:transparent;font-size:0;width:8px;">&#8203;</td>
+                                                                        <td align="left" class="u" style="padding:0;height:46px;vertical-align:middle;">
+                                                                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                                                                 <tr>
-                                                                                    <td class="x tm" align="left"
-                                                                                        width="100%"
-                                                                                        style="padding-bottom:8px;">
-                                                                                        <p
-                                                                                            style="Margin:0;text-align:left;mso-ansi-font-size:12px;">
-                                                                                            <span
-                                                                                                style="font-size:12px;font-family:'Bahnschrift','Arial',sans-serif;font-weight:400;color:#777777;line-height:158%;mso-line-height-alt:20px;mso-ansi-font-size:12px;">${escapeHtml(state.phone)}</span></p>
+                                                                                    <td class="x tm" align="left" width="100%" style="padding-bottom:8px;">
+                                                                                        <p style="Margin:0;text-align:left;white-space:nowrap;mso-ansi-font-size:12px;">
+                                                                                            <span style="font-size:12px;font-family:'Bahnschrift','Arial',sans-serif;font-weight:400;color:#777777;line-height:158%;white-space:nowrap;mso-line-height-alt:20px;mso-ansi-font-size:12px;">${escapeHtml(state.phone)}</span>
+                                                                                        </p>
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td class="x" align="left"
-                                                                                        width="100%">
-                                                                                        <p
-                                                                                            style="Margin:0;text-align:left;mso-ansi-font-size:12px;">
-                                                                                            <span
-                                                                                                style="font-size:12px;font-family:'Bahnschrift','Arial',sans-serif;font-weight:400;color:#777777;line-height:158%;mso-line-height-alt:20px;mso-ansi-font-size:12px;">${escapeHtml(state.email)}</span>
+                                                                                    <td class="x" align="left" width="100%">
+                                                                                        <p style="Margin:0;text-align:left;white-space:nowrap;mso-ansi-font-size:12px;">
+                                                                                            <a href="mailto:contact@nthuracing.tw" style="text-decoration:none;color:#777777;"><span style="font-size:12px;font-family:'Bahnschrift','Arial',sans-serif;font-weight:400;color:#777777;line-height:158%;white-space:nowrap;mso-line-height-alt:20px;mso-ansi-font-size:12px;">contact@nthuracing.tw</span></a>
                                                                                         </p>
                                                                                     </td>
                                                                                 </tr>
@@ -281,50 +248,32 @@ function generateSignatureHtml(options = { absoluteUrls: false }) {
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="4"
-                                                                style="font-size:0;padding:0;word-break:break-word;">
+                                                            <td style="font-size:0;padding:0;">
                                                                 <div style="height:4px;line-height:4px;">&#8202;</div>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td align="left" class="a"
-                                                                style="background:transparent;font-size:0;padding:0;word-break:break-word;">
-                                                                <table cellpadding="0" cellspacing="0" width="100%"
-                                                                    border="0"
-                                                                    style="color:#000000;font-family:Arial,sans-serif;font-size:13px;line-height:22px;table-layout:fixed;width:100%;border:none;">
+                                                            <td align="left" class="a" style="background:transparent;font-size:0;padding:0;word-break:normal;">
+                                                                <table cellpadding="0" cellspacing="0" width="100%" border="0"
+                                                                    style="color:#000000;font-family:Arial,sans-serif;font-size:13px;line-height:22px;width:100%;border:none;">
                                                                     <tr class="q">
-                                                                        <td align="left" class="u"
-                                                                            style="padding:0;height:20px;word-wrap:break-word;vertical-align:middle;"
-                                                                            width="8.368200836820083%">
-                                                                            <table border="0" cellpadding="0"
-                                                                                cellspacing="0" width="100%">
+                                                                        <td align="left" class="u" style="padding:0;height:20px;vertical-align:middle;width:24px;">
+                                                                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                                                                 <tr>
-                                                                                    <td class="i fwm" align="left"
-                                                                                        width="100%">
-                                                                                        <img alt="Location" width="20"
-                                                                                            height="20"
-                                                                                            style="display:block;width:20px;height:20px;border:0;"
-                                                                                            src="${locationIconUrl}">
+                                                                                    <td class="i fwm" align="left" width="100%">
+                                                                                        <img alt="Location" width="20" height="20" style="display:block;width:20px;height:20px;border:0;" src="${locationIconUrl}">
                                                                                     </td>
                                                                                 </tr>
                                                                             </table>
                                                                         </td>
-                                                                        <td class="tgtr"
-                                                                            style="vertical-align:middle;color:transparent;font-size:0;"
-                                                                            width="3.3472803347280333%">&#8203;
-                                                                        </td>
-                                                                        <td align="left" class="u"
-                                                                            style="padding:0;height:19px;word-wrap:break-word;vertical-align:middle;"
-                                                                            width="88.28451882845188%">
-                                                                            <table border="0" cellpadding="0"
-                                                                                cellspacing="0" width="100%">
+                                                                        <td style="vertical-align:middle;color:transparent;font-size:0;width:8px;">&#8203;</td>
+                                                                        <td align="left" class="u" style="padding:0;height:19px;vertical-align:middle;">
+                                                                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                                                                 <tr>
-                                                                                    <td class="x" align="left"
-                                                                                        width="100%">
-                                                                                        <p
-                                                                                            style="Margin:0;text-align:left;mso-ansi-font-size:12px;">
-                                                                                            <span
-                                                                                                style="font-size:12px;font-family:'Bahnschrift','Arial',sans-serif;font-weight:400;color:#777777;line-height:158%;mso-line-height-alt:20px;mso-ansi-font-size:12px;">${escapeHtml(state.location)}</span></p>
+                                                                                    <td class="x" align="left" width="100%">
+                                                                                        <p style="Margin:0;text-align:left;white-space:nowrap;mso-ansi-font-size:12px;">
+                                                                                            <span style="font-size:12px;font-family:'Bahnschrift','Arial',sans-serif;font-weight:400;color:#777777;line-height:158%;white-space:nowrap;mso-line-height-alt:20px;mso-ansi-font-size:12px;">新竹市光復路二段101號 科儀中心 S11</span>
+                                                                                        </p>
                                                                                     </td>
                                                                                 </tr>
                                                                             </table>
@@ -339,18 +288,12 @@ function generateSignatureHtml(options = { absoluteUrls: false }) {
                                             <!--[if mso | IE]>
 </td><td style="vertical-align:top;width:12px;">
 <![endif]-->
-                                            <div class="pc2-2184 ogf g"
-                                                style="font-size:0;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:2.2184%;">
-                                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                                    width="100%">
+                                            <div class="pc1-8 ogf g"
+                                                style="font-size:0;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:1.8%;">
+                                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                                                     <tbody>
                                                         <tr>
-                                                            <td style="vertical-align:top;padding:0;">
-                                                                <table border="0" cellpadding="0" cellspacing="0"
-                                                                    role="presentation" width="100%">
-                                                                    <tbody></tbody>
-                                                                </table>
-                                                            </td>
+                                                            <td style="vertical-align:top;padding:0;"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -358,21 +301,17 @@ function generateSignatureHtml(options = { absoluteUrls: false }) {
                                             <!--[if mso | IE]>
 </td><td style="vertical-align:top;width:132px;">
 <![endif]-->
-                                            <div class="pc22-5256 ogf c pt-0"
-                                                style="font-size:0;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:22.5256%;">
-                                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                                    width="100%">
+                                            <div class="pc21 ogf c pt-0"
+                                                style="font-size:0;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:20.9%;">
+                                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                                                     <tbody>
                                                         <tr>
                                                             <td style="border:none;vertical-align:top;padding:0;">
-                                                                <table border="0" cellpadding="0" cellspacing="0"
-                                                                    role="presentation" width="100%">
+                                                                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
                                                                     <tbody>
                                                                         <tr>
-                                                                            <td align="center" class="i"
-                                                                                style="font-size:0;padding:0;word-break:break-word;">
-                                                                                <table border="0" cellpadding="0"
-                                                                                    cellspacing="0" role="presentation"
+                                                                            <td align="center" class="i" style="font-size:0;padding:0;">
+                                                                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
                                                                                     style="border-collapse:collapse;border-spacing:0;">
                                                                                     <tbody>
                                                                                         <tr>
@@ -382,32 +321,13 @@ function generateSignatureHtml(options = { absoluteUrls: false }) {
                                                                                                     style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:132px;font-size:13px;"
                                                                                                     width="132"
                                                                                                     height="auto">
-                                                                                            </td>
+                                                             </td>
                                                                                         </tr>
                                                                                     </tbody>
                                                                                 </table>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <!--[if mso | IE]>
-</td><td style="vertical-align:top;width:20px;">
-<![endif]-->
-                                            <div class="pc3-5836 ogf"
-                                                style="font-size:0;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:3.5836%;">
-                                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                                    width="100%">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td style="vertical-align:top;padding:0;">
-                                                                <table border="0" cellpadding="0" cellspacing="0"
-                                                                    role="presentation" width="100%">
-                                                                    <tbody></tbody>
                                                                 </table>
                                                             </td>
                                                         </tr>
@@ -445,8 +365,8 @@ function generatePlainText() {
   return `${state.chineseName} ${engName}
 ${state.groupTitle} | NTHU Racing 清大賽車工廠
 Tel: ${state.phone}
-Email: ${state.email}
-Address: ${state.location}`;
+Email: contact@nthuracing.tw
+Address: 新竹市光復路二段101號 科儀中心 S11`;
 }
 
 /**
@@ -595,9 +515,12 @@ function loadStateFromLocalStorage() {
     if (saved) {
       const parsed = JSON.parse(saved);
       state = { ...defaultState, ...parsed };
-      // Ensure logo and color remain locked
+      // Ensure fixed team values
+      state.email = 'contact@nthuracing.tw';
+      state.location = '新竹市光復路二段101號 科儀中心 S11';
       state.logoFileName = 'nthuracing_logo_2025_blue_0474cf_0f3b7d.png';
       state.nameColor = '#0474cf';
+      state.phone = formatTaiwanPhone(state.phone);
     }
   } catch (e) {
     console.warn('Failed to load state from localStorage:', e);
@@ -608,7 +531,7 @@ function loadStateFromLocalStorage() {
  * Sync form input elements with state
  */
 function syncFormWithState() {
-  const fields = ['chineseName', 'englishName', 'groupTitle', 'phone', 'email', 'location'];
+  const fields = ['chineseName', 'englishName', 'groupTitle', 'phone'];
   fields.forEach(f => {
     const el = document.getElementById(`input-${f}`);
     if (el) el.value = state[f] || '';
@@ -631,6 +554,7 @@ function renderChips() {
       chip.className = 'chip';
       chip.textContent = `${g.zh} (${g.en})`;
       chip.dataset.en = g.en;
+      chip.dataset.zh = g.zh;
       chip.addEventListener('click', () => {
         state.selectedGroup = g.en;
         composeGroupTitle();
@@ -700,8 +624,7 @@ function updateTitleChips() {
  */
 function bindEventListeners() {
   // Inputs real-time listener
-  const fields = ['chineseName', 'englishName', 'groupTitle', 'phone', 'email', 'location'];
-  fields.forEach(f => {
+  ['chineseName', 'englishName', 'groupTitle'].forEach(f => {
     const el = document.getElementById(`input-${f}`);
     if (el) {
       el.addEventListener('input', (e) => {
@@ -711,25 +634,19 @@ function bindEventListeners() {
     }
   });
 
-  // Phone Format Helper
-  const btnFormatPhone = document.getElementById('btn-format-phone');
-  if (btnFormatPhone) {
-    btnFormatPhone.addEventListener('click', () => {
-      let raw = state.phone.trim();
-      let cleaned = raw.replace(/[^0-9+]/g, '');
-      let formatted = raw;
-      if (cleaned.startsWith('09') && cleaned.length === 10) {
-        formatted = `+(886) ${cleaned.slice(1, 4)}-${cleaned.slice(4)}`;
-      } else if (cleaned.startsWith('+8869') && cleaned.length === 13) {
-        formatted = `+(886) ${cleaned.slice(4, 7)}-${cleaned.slice(7)}`;
-      } else if (cleaned.startsWith('8869') && cleaned.length === 12) {
-        formatted = `+(886) ${cleaned.slice(3, 6)}-${cleaned.slice(6)}`;
-      }
-      state.phone = formatted;
-      const el = document.getElementById('input-phone');
-      if (el) el.value = formatted;
+  // Phone input with automatic formatting
+  const phoneEl = document.getElementById('input-phone');
+  if (phoneEl) {
+    phoneEl.addEventListener('input', (e) => {
+      state.phone = e.target.value;
       updatePreview();
-      showToast('已轉換格式：' + formatted);
+    });
+
+    phoneEl.addEventListener('blur', (e) => {
+      const formatted = formatTaiwanPhone(e.target.value);
+      state.phone = formatted;
+      e.target.value = formatted;
+      updatePreview();
     });
   }
 

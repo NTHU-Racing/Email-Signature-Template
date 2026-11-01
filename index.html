@@ -64,11 +64,11 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="input-chineseName">中文姓名</label>
-                            <input type="text" id="input-chineseName" class="input-control" placeholder="例：陳冠宇" value="陳冠宇">
+                            <input type="text" id="input-chineseName" class="input-control" placeholder="例：陳柏余" value="陳柏余">
                         </div>
                         <div class="form-group">
-                            <label for="input-englishName">英文姓名 <span class="label-hint">(自動加上括號)</span></label>
-                            <input type="text" id="input-englishName" class="input-control" placeholder="例：Kuan-Yu Chen" value="Kuan-Yu Chen">
+                            <label for="input-englishName">英文姓名 <span class="label-hint">(可用自己的英文名如 Bill Chen 或拼音如 Bo-Yu Chen)</span></label>
+                            <input type="text" id="input-englishName" class="input-control" placeholder="例：Bill Chen 或 Bo-Yu Chen" value="Bo-Yu Chen">
                         </div>
                     </div>
                 </div>
@@ -97,7 +97,7 @@
 
                     <div class="form-group">
                         <label for="input-groupTitle">簽名檔顯示之組別與職稱 <span class="label-hint">(可直接自訂修改)</span></label>
-                        <input type="text" id="input-groupTitle" class="input-control" placeholder="例：Leader of Electrical Group" value="Leader of Chassis Group">
+                        <input type="text" id="input-groupTitle" class="input-control" placeholder="例：Leader of Electrical Group" value="Aerodynamic Group | Member">
                     </div>
                 </div>
 
@@ -108,26 +108,24 @@
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                             </svg>
-                            3. 聯絡方式與隊部地址
+                            3. 聯絡電話
                         </h2>
                     </div>
 
                     <div class="form-group">
-                        <div style="display: flex; justify-content: space-between; align-items: baseline;">
-                            <label for="input-phone">聯絡電話</label>
-                            <button type="button" class="btn-ghost-sm" id="btn-format-phone" title="自動將手機號碼轉換為國際標準格式">格式化為 +(886)</button>
+                        <label for="input-phone">聯絡電話 <span class="label-hint">(格式自動固定為 +(886) 9XX-XXX-XXX)</span></label>
+                        <input type="text" id="input-phone" class="input-control" placeholder="例：0900-635-863 或 0912345678" value="+(886) 900-635-863">
+                    </div>
+
+                    <div class="fixed-info-box" style="margin-top: 14px; padding: 12px 14px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); border-radius: var(--radius-md); font-size: 0.82rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 8px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: var(--text-muted); font-weight: 500;">電子信箱</span>
+                            <span style="color: #fff; font-family: var(--font-mono);">contact@nthuracing.tw</span>
                         </div>
-                        <input type="text" id="input-phone" class="input-control" placeholder="+(886) 912-345678" value="+(886) 912-345678">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="input-email">電子信箱</label>
-                        <input type="email" id="input-email" class="input-control" placeholder="例：nthu.racing@gmail.com" value="nthuracing@gmail.com">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="input-location">隊部 / 基地地址</label>
-                        <input type="text" id="input-location" class="input-control" placeholder="新竹市光復路二段101號 科儀中心 S11" value="新竹市光復路二段101號 科儀中心 S11">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: var(--text-muted); font-weight: 500;">隊部地址</span>
+                            <span style="color: #fff;">新竹市光復路二段101號 科儀中心 S11</span>
+                        </div>
                     </div>
                 </div>
             </section>
